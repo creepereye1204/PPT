@@ -31,6 +31,7 @@
     progress.style.width = `${((n + 1) / slides.length) * 100}%`;
     history.replaceState(null, '', `#${n + 1}`);
     Backgrounds.set(slides[n].dataset.bg);
+    document.dispatchEvent(new CustomEvent('slide:enter', { detail: { slide: slides[n], index: n } }));
   }
 
   function next() {
