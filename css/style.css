@@ -1,0 +1,174 @@
+:root {
+  --bg: #070b1a;
+  --fg: #e8ecff;
+  --muted: #9aa3c7;
+  --c1: #4cc9f0;   /* cyan   */
+  --c2: #7b5cff;   /* violet */
+  --c3: #f72585;   /* pink   */
+  --card: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.14);
+  --font: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* ---------- 배경 ---------- */
+#bg {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+  transition: opacity .35s ease;
+}
+#bg.fading { opacity: 0; }
+
+.vignette {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .55) 100%);
+}
+
+/* ---------- 스테이지 (1920x1080 고정 후 스케일) ---------- */
+.stage {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 1920px; height: 1080px;
+  transform-origin: center center;
+}
+
+.slide {
+  position: absolute; inset: 0;
+  padding: 120px 160px;
+  display: flex; flex-direction: column; justify-content: center;
+  opacity: 0;
+  transform: translateX(80px);
+  transition: opacity .6s ease, transform .7s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+}
+.slide.past   { transform: translateX(-80px); }
+.slide.active { opacity: 1; transform: none; pointer-events: auto; }
+
+.slide.center { align-items: center; text-align: center; }
+.slide.narrow > * { max-width: 920px; }
+
+/* 슬라이드 진입 시 자식 요소 순차 등장 */
+.slide.active > *:not(.fragment) { animation: rise .8s cubic-bezier(.2, .8, .2, 1) both; }
+.slide.active > *:nth-child(2) { animation-delay: .08s; }
+.slide.active > *:nth-child(3) { animation-delay: .16s; }
+.slide.active > *:nth-child(4) { animation-delay: .24s; }
+.slide.active > *:nth-child(5) { animation-delay: .32s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 단계별 등장 요소 */
+.fragment { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+.fragment.visible { opacity: 1; transform: none; }
+
+/* ---------- 타이포그래피 ---------- */
+.eyebrow {
+  font-size: 28px; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--c1);
+  margin-bottom: 28px;
+}
+h1 { font-size: 140px; font-weight: 800; line-height: 1.1; letter-spacing: -.02em; }
+h1.section-title { font-size: 120px; }
+h2 { font-size: 76px; font-weight: 700; line-height: 1.2; letter-spacing: -.01em; margin-bottom: 56px; }
+h3 { font-size: 44px; font-weight: 700; margin-bottom: 24px; }
+.lead { font-size: 44px; color: var(--muted); margin-top: 32px; }
+.meta { font-size: 30px; color: var(--muted); margin-top: 72px; opacity: .8; }
+.note { font-size: 30px; color: var(--muted); margin-top: 48px; }
+b { color: #fff; font-weight: 700; }
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--c1), var(--c2) 50%, var(--c3));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+
+/* ---------- 컴포넌트 ---------- */
+.bullets { list-style: none; display: flex; flex-direction: column; gap: 36px; }
+.bullets li { font-size: 46px; line-height: 1.45; padding-left: 52px; position: relative; }
+.bullets li::before {
+  content: ''; position: absolute; left: 0; top: .55em;
+  width: 22px; height: 22px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+}
+.bullets.small { gap: 20px; }
+.bullets.small li { font-size: 36px; padding-left: 40px; }
+.bullets.small li::before { width: 16px; height: 16px; }
+
+.agenda { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 32px 64px; }
+.agenda li {
+  font-size: 50px; font-weight: 600;
+  display: flex; align-items: center; gap: 32px;
+  padding: 40px 48px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 28px;
+  backdrop-filter: blur(8px);
+}
+.agenda .num { font-family: var(--mono); font-size: 40px; color: var(--c1); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+.card {
+  padding: 56px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 32px;
+  backdrop-filter: blur(10px);
+}
+.card.accent { border-color: rgba(76, 201, 240, .5); box-shadow: 0 0 60px rgba(76, 201, 240, .15); }
+.formula { font-size: 40px; color: var(--muted); margin-bottom: 36px; }
+
+.stats { display: flex; flex-direction: column; gap: 28px; }
+.stat {
+  display: flex; align-items: baseline; gap: 40px;
+  padding: 32px 48px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+  backdrop-filter: blur(8px);
+}
+.stat .value { font-size: 80px; font-weight: 800; font-family: var(--mono); color: var(--c1); min-width: 340px; }
+.stat .label { font-size: 36px; color: var(--muted); }
+
+.quote { font-size: 120px; font-weight: 700; line-height: 1.2; font-style: italic; }
+.cite { font-size: 36px; color: var(--muted); margin-top: 56px; }
+
+/* 코드 블록 */
+.code {
+  font-family: var(--mono); font-size: 34px; line-height: 1.55;
+  padding: 48px 56px;
+  background: rgba(5, 8, 20, .82); border: 1px solid var(--border); border-radius: 24px;
+  overflow: hidden; white-space: pre;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+}
+.code .kw  { color: #c792ea; }
+.code .str { color: #c3e88d; }
+.code .num { color: #f78c6c; }
+.code .fn  { color: #82aaff; }
+.code .cm  { color: #6b7394; font-style: italic; }
+
+/* ---------- HUD ---------- */
+.hud {
+  position: fixed; left: 0; right: 0; bottom: 18px;
+  padding: 0 28px;
+  display: flex; justify-content: space-between;
+  font-size: 14px; color: var(--muted);
+  letter-spacing: .05em;
+  pointer-events: none;
+}
+.counter { font-family: var(--mono); }
+.progress { position: fixed; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255, 255, 255, .06); }
+.progress span {
+  display: block; height: 100%; width: 0;
+  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+  transition: width .5s ease;
+}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI 강의</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- 움직이는 배경 (슬라이드마다 data-bg로 지정) -->
+  <canvas id="bg"></canvas>
+  <div class="vignette"></div>
+
+  <!-- 1920x1080 기준 스테이지: 화면 크기에 맞게 자동 스케일 -->
+  <main class="stage" id="stage">
+
+    <!-- 1. 타이틀 -->
+    <section class="slide center" data-bg="neural">
+      <p class="eyebrow">AI Lecture · 2026</p>
+      <h1>인공지능 <span class="gradient-text">입문</span></h1>
+      <p class="lead">데이터에서 패턴을 배우는 기계를 이해하기</p>
+      <p class="meta">발표자 이름 · 소속 · 2026.11.15</p>
+    </section>
+
+    <!-- 2. 목차 -->
+    <section class="slide" data-bg="aurora">
+      <p class="eyebrow">Agenda</p>
+      <h2>오늘 다룰 내용</h2>
+      <ol class="agenda">
+        <li><span class="num">01</span>머신러닝의 기초</li>
+        <li><span class="num">02</span>신경망과 딥러닝</li>
+        <li><span class="num">03</span>트랜스포머와 LLM</li>
+        <li><span class="num">04</span>실습 &amp; Q&amp;A</li>
+      </ol>
+    </section>
+
+    <!-- 3. 섹션 구분 -->
+    <section class="slide center" data-bg="grid">
+      <p class="eyebrow">Part 01</p>
+      <h1 class="section-title">머신러닝의 기초</h1>
+      <p class="lead">규칙을 짜는 대신, 데이터로 규칙을 배운다</p>
+    </section>
+
+    <!-- 4. 본문 (불릿 + 단계별 등장) -->
+    <section class="slide" data-bg="flow">
+      <p class="eyebrow">Concept</p>
+      <h2>머신러닝이란?</h2>
+      <ul class="bullets">
+        <li class="fragment"><b>지도학습</b> — 정답(label)이 있는 데이터로 입력→출력 매핑을 학습</li>
+        <li class="fragment"><b>비지도학습</b> — 정답 없이 데이터의 구조·군집을 발견</li>
+        <li class="fragment"><b>강화학습</b> — 보상을 최대화하도록 행동 정책을 학습</li>
+      </ul>
+      <p class="note fragment">→ 키보드 → / Space 로 한 줄씩 등장합니다</p>
+    </section>
+
+    <!-- 5. 2단 레이아웃 -->
+    <section class="slide" data-bg="waves">
+      <p class="eyebrow">Comparison</p>
+      <h2>전통적 프로그래밍 vs 머신러닝</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>전통적 프로그래밍</h3>
+          <p class="formula">규칙 + 데이터 → <b>답</b></p>
+          <ul class="bullets small">
+            <li>사람이 규칙을 직접 작성</li>
+            <li>예외 상황에 취약</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>머신러닝</h3>
+          <p class="formula">데이터 + 답 → <b>규칙</b></p>
+          <ul class="bullets small">
+            <li>모델이 규칙을 스스로 학습</li>
+            <li>데이터가 많을수록 강해짐</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 코드 -->
+    <section class="slide" data-bg="matrix">
+      <p class="eyebrow">Code</p>
+      <h2>PyTorch로 만드는 간단한 MLP</h2>
+      <pre class="code" data-lang="python"><code># 2층 다층 퍼셉트론
+import torch.nn as nn
+
+class MLP(nn.Module):
+    def __init__(self, d_in, d_hidden, d_out):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(d_in, d_hidden),
+            nn.ReLU(),
+            nn.Linear(d_hidden, d_out),
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+model = MLP(784, 256, 10)</code></pre>
+    </section>
+
+    <!-- 7. 카드 / 수치 -->
+    <section class="slide narrow" data-bg="orbit">
+      <p class="eyebrow">Key Numbers</p>
+      <h2>모델은 얼마나 커졌을까?</h2>
+      <div class="stats">
+        <div class="stat fragment"><span class="value">117M</span><span class="label">GPT-1 (2018) 파라미터</span></div>
+        <div class="stat fragment"><span class="value">175B</span><span class="label">GPT-3 (2020) 파라미터</span></div>
+        <div class="stat fragment"><span class="value">×1,500</span><span class="label">2년 사이 규모 증가</span></div>
+      </div>
+    </section>
+
+    <!-- 8. 인용 -->
+    <section class="slide center" data-bg="warp">
+      <blockquote class="quote">
+        “Can machines think?”
+      </blockquote>
+      <p class="cite">— Alan Turing, <i>Computing Machinery and Intelligence</i> (1950)</p>
+    </section>
+
+    <!-- 9. 마무리 -->
+    <section class="slide center" data-bg="pulse">
+      <p class="eyebrow">Thank you</p>
+      <h1><span class="gradient-text">Q &amp; A</span></h1>
+      <p class="lead">질문 환영합니다</p>
+      <p class="meta">email@example.com · github.com/username</p>
+    </section>
+
+  </main>
+
+  <!-- 하단 HUD -->
+  <div class="hud">
+    <span class="hud-title">AI 강의 · 인공지능 입문</span>
+    <span class="counter" id="counter">1 / 9</span>
+  </div>
+  <div class="progress"><span id="progress"></span></div>
+
+  <script src="js/backgrounds.js"></script>
+  <script src="js/deck.js"></script>
+</body>
+</html>
