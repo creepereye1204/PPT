@@ -63,6 +63,19 @@ const Backgrounds = (() => {
           g.addColorStop(0, rgba(q.c, 0.95)); g.addColorStop(1, rgba(q.c, 0));
           ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI * 2); ctx.fill();
         }
+        // 마우스 근처 노드가 커서에 연결되고 살짝 끌려옴
+        const M = window.Pointer;
+        if (M && M.active) {
+          const R = 240;
+          for (const p of N) {
+            const dx = M.x - p.x, dy = M.y - p.y, d = Math.hypot(dx, dy);
+            if (d > R) continue;
+            const a = 1 - d / R;
+            ctx.strokeStyle = rgba(P.c3, a * 0.7); ctx.lineWidth = 1.2;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(M.x, M.y); ctx.stroke();
+            p.x += dx * 0.004 * a * k; p.y += dy * 0.004 * a * k;
+          }
+        }
         ctx.fillStyle = rgba(P.c1, 0.85);
         for (const p of N) { ctx.beginPath(); ctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2); ctx.fill(); }
       },
