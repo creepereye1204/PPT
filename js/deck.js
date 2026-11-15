@@ -45,11 +45,13 @@
     else if (cur > 0) go(cur - 1, true);
   }
 
-  /* 간단한 Python 문법 하이라이트 (pre.code[data-lang=python]) */
-  function highlight(el) {
+  /* 간단한 문법 하이라이트 (pre.code[data-lang=python|json|shell]) */
+  const KW = /\b(def|class|return|import|from|as|if|elif|else|for|in|while|with|self|None|True|False|true|false|null|lambda|and|or|not|super|yield|try|except|raise|pass|break)\b/;
+  function highlight(el, lang) {
     const src = el.textContent;
     const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const re = /(#.*$)|("""[\s\S]*?"""|'[^'\n]*'|"[^"\n]*")|\b(def|class|return|import|from|as|if|elif|else|for|in|while|with|self|None|True|False|lambda|and|or|not|super|yield|try|except|raise|pass)\b|\b(\d+(?:\.\d+)?)\b|\b([A-Za-z_]\w*)(?=\()/gm;
+    const kw = lang === 'shell' ? '()(?!)' : KW.source;
+    const re = new RegExp(`((?:^|\\s)#.*$)|("""[\\s\\S]*?"""|'[^'\\n]*'|"[^"\\n]*")|${kw}|\\b(\\d+(?:\\.\\d+)?)\\b|((?<=^|\\s)\\/[a-z][\\w-]*|\\b[A-Za-z_]\\w*(?=\\())`, 'gm');
     let out = '', i = 0, m;
     while ((m = re.exec(src))) {
       out += esc(src.slice(i, m.index));
@@ -59,7 +61,7 @@
     }
     el.innerHTML = out + esc(src.slice(i));
   }
-  document.querySelectorAll('pre.code[data-lang="python"] code').forEach(highlight);
+  document.querySelectorAll('pre.code[data-lang]').forEach((pre) => highlight(pre.querySelector('code'), pre.dataset.lang));
 
   /* 입력 */
   document.addEventListener('keydown', (e) => {

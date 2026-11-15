@@ -20,8 +20,8 @@
     <!-- 1. 타이틀 -->
     <section class="slide center" data-bg="neural">
       <p class="eyebrow">AI Lecture · 2026</p>
-      <h1>인공지능 <span class="gradient-text">입문</span></h1>
-      <p class="lead">데이터에서 패턴을 배우는 기계를 이해하기</p>
+      <h1>AI 엔지니어링의 <span class="gradient-text">진화</span></h1>
+      <p class="lead">프롬프트에서 그래프까지, 그리고 실전 스킬 스택</p>
       <p class="meta">발표자 이름 · 소속 · 2026.11.15</p>
     </section>
 
@@ -43,91 +43,398 @@
       </ol>
     </section>
 
-    <!-- 3. 섹션 구분 -->
-    <section class="slide center" data-bg="grid">
-      <p class="eyebrow">Part 01</p>
-      <h1 class="section-title">머신러닝의 기초</h1>
-      <p class="lead">규칙을 짜는 대신, 데이터로 규칙을 배운다</p>
-    </section>
-
-    <!-- 4. 본문 (불릿 + 단계별 등장) -->
+    <!-- ===== 01. 프롬프트 엔지니어링 ===== -->
     <section class="slide" data-bg="flow">
-      <p class="eyebrow">Concept</p>
-      <h2>머신러닝이란?</h2>
-      <ul class="bullets">
-        <li class="fragment"><b>지도학습</b> — 정답(label)이 있는 데이터로 입력→출력 매핑을 학습</li>
-        <li class="fragment"><b>비지도학습</b> — 정답 없이 데이터의 구조·군집을 발견</li>
-        <li class="fragment"><b>강화학습</b> — 보상을 최대화하도록 행동 정책을 학습</li>
+      <p class="eyebrow">Part 01 · 등장 배경</p>
+      <h2>프롬프트 엔지니어링</h2>
+      <p class="tagline">모델에게 무엇을, 어떻게 요청할까</p>
+      <ul class="bullets mid">
+          <li class="fragment"><b>GPT-3 (2020)</b> — 몇 개의 예시만 보여줘도 새 작업을 수행하는 few-shot 학습 발견</li>
+          <li class="fragment">모델 가중치를 바꾸지 않고 <b>입력 텍스트만으로</b> 동작을 제어할 수 있게 됨</li>
+          <li class="fragment"><b>Chain-of-Thought (2022)</b> — “단계별로 생각해보자” 한 줄로 추론 성능 향상</li>
+          <li class="fragment"><b>ChatGPT (2022.11)</b> 이후 누구나 쓰는 기술로 대중화</li>
       </ul>
-      <p class="note fragment">→ 키보드 → / Space 로 한 줄씩 등장합니다</p>
     </section>
 
-    <!-- 5. 2단 레이아웃 -->
-    <section class="slide" data-bg="waves">
-      <p class="eyebrow">Comparison</p>
-      <h2>전통적 프로그래밍 vs 머신러닝</h2>
+    <section class="slide" data-bg="flow">
+      <p class="eyebrow">Part 01 · 장단점</p>
+      <h2>프롬프트 엔지니어링</h2>
       <div class="two-col">
-        <div class="card">
-          <h3>전통적 프로그래밍</h3>
-          <p class="formula">규칙 + 데이터 → <b>답</b></p>
+        <div class="card pro">
+          <h3>장점</h3>
           <ul class="bullets small">
-            <li>사람이 규칙을 직접 작성</li>
-            <li>예외 상황에 취약</li>
+          <li>비용이 거의 없고 즉시 실험 가능</li>
+          <li>파인튜닝·학습 데이터 불필요</li>
+          <li>개발자가 아니어도 활용 가능</li>
+          <li>빠른 프로토타이핑에 최적</li>
           </ul>
         </div>
-        <div class="card accent">
-          <h3>머신러닝</h3>
-          <p class="formula">데이터 + 답 → <b>규칙</b></p>
+        <div class="card con">
+          <h3>단점</h3>
           <ul class="bullets small">
-            <li>모델이 규칙을 스스로 학습</li>
-            <li>데이터가 많을수록 강해짐</li>
+          <li>문구 하나에 결과가 흔들림 (취약성)</li>
+          <li>모델·버전이 바뀌면 다시 튜닝 필요</li>
+          <li>모델이 모르는 최신·사내 지식은 못 넣음</li>
+          <li>결과를 체계적으로 평가하기 어려움</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 6. 코드 -->
+    <section class="slide" data-bg="flow">
+      <p class="eyebrow">Part 01 · 예시</p>
+      <h2>역할 + 지시 + 예시 + 출력 형식</h2>
+      <pre class="code small" data-lang="shell"><code># 역할
+당신은 쇼핑몰 고객 리뷰 분석가입니다.
+# 지시
+리뷰의 감정을 positive / negative / neutral 로 분류하세요.
+# 예시 (few-shot)
+리뷰: "배송이 빨라서 좋았어요" → positive
+리뷰: "포장이 다 찢어져서 왔네요" → negative
+# 출력 형식
+리뷰: "{review}"
+{"label": "...", "reason": "한 문장"}</code></pre>
+      <p class="code-caption">역할·지시·예시·형식을 분리하면 결과가 안정적이고 수정하기 쉬워진다</p>
+    </section>
+
+    <!-- ===== 02. 컨텍스트 엔지니어링 ===== -->
+    <section class="slide" data-bg="waves">
+      <p class="eyebrow">Part 02 · 등장 배경</p>
+      <h2>컨텍스트 엔지니어링</h2>
+      <p class="tagline">모델이 보는 정보를 설계하기</p>
+      <ul class="bullets mid">
+          <li class="fragment">LLM 앱이 <b>RAG·메모리·도구 결과·대화 기록</b>을 함께 다루게 됨</li>
+          <li class="fragment">“어떻게 묻느냐”보다 <b>“무엇을 보여주느냐”</b>가 성능을 좌우</li>
+          <li class="fragment">컨텍스트 창은 커졌지만(100K~1M 토큰) 길수록 <b>중간 정보를 놓치는</b> 문제 (Lost in the Middle, 2023)</li>
+          <li class="fragment"><b>2025년 중반</b> 토비 뤼트케(Shopify), 안드레이 카파시 등이 용어를 확산</li>
+      </ul>
+    </section>
+
+    <section class="slide" data-bg="waves">
+      <p class="eyebrow">Part 02 · 장단점</p>
+      <h2>컨텍스트 엔지니어링</h2>
+      <div class="two-col">
+        <div class="card pro">
+          <h3>장점</h3>
+          <ul class="bullets small">
+          <li>최신·사내 지식을 모델에 주입</li>
+          <li>근거 문서 제공으로 환각 감소</li>
+          <li>사용자별 메모리로 개인화</li>
+          <li>모델을 바꿔도 파이프라인 재사용</li>
+          </ul>
+        </div>
+        <div class="card con">
+          <h3>단점</h3>
+          <ul class="bullets small">
+          <li>검색 품질이 나쁘면 결과도 나쁨</li>
+          <li>토큰 비용·응답 지연 증가</li>
+          <li>정보가 많을수록 주의가 분산됨</li>
+          <li>조립 파이프라인이 복잡해짐</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-bg="waves">
+      <p class="eyebrow">Part 02 · 예시</p>
+      <h2>매 요청마다 컨텍스트를 조립하기</h2>
+      <pre class="code small" data-lang="python"><code>def build_context(query, user):
+    docs    = retriever.search(query, k=5)      # RAG: 관련 문서
+    memory  = memory_store.recall(user.id)      # 장기 기억
+    history = chat_log.last(user.id, n=10)      # 최근 대화
+
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": f"사용자 정보: {memory}"},
+        {"role": "system", "content": format_docs(docs)},
+        *history,
+        {"role": "user", "content": query},
+    ]</code></pre>
+      <p class="code-caption">프롬프트는 한 줄, 컨텍스트는 시스템 — 무엇을 넣고 무엇을 뺄지가 핵심</p>
+    </section>
+
+    <!-- ===== 03. 하네스 엔지니어링 ===== -->
+    <section class="slide" data-bg="grid">
+      <p class="eyebrow">Part 03 · 등장 배경</p>
+      <h2>하네스 엔지니어링</h2>
+      <p class="tagline">도구·실행 환경으로 모델을 감싸기</p>
+      <ul class="bullets mid">
+          <li class="fragment"><b>Function Calling (2023)</b> 이후 모델이 직접 도구를 호출하기 시작</li>
+          <li class="fragment">Claude Code·Codex CLI 같은 <b>코딩 에이전트</b>가 파일 수정·테스트 실행까지 수행</li>
+          <li class="fragment">같은 모델이라도 <b>감싸는 환경(하네스)</b>에 따라 결과가 크게 달라짐</li>
+          <li class="fragment">에이전트 성능 = <b>모델 + 하네스</b> (도구 · 권한 · 샌드박스 · 훅 · 스킬)</li>
+      </ul>
+    </section>
+
+    <section class="slide" data-bg="grid">
+      <p class="eyebrow">Part 03 · 장단점</p>
+      <h2>하네스 엔지니어링</h2>
+      <div class="two-col">
+        <div class="card pro">
+          <h3>장점</h3>
+          <ul class="bullets small">
+          <li>실제 행동 가능 (파일·터미널·브라우저)</li>
+          <li>권한·샌드박스로 안전하게 통제</li>
+          <li>도구·스킬 추가로 능력 확장</li>
+          <li>모델을 바꿔도 하네스는 재사용</li>
+          </ul>
+        </div>
+        <div class="card con">
+          <h3>단점</h3>
+          <ul class="bullets small">
+          <li>설계·유지보수 비용이 큼</li>
+          <li>도구가 많으면 잘못 고르기 쉬움</li>
+          <li>프롬프트 인젝션·과도한 권한 위험</li>
+          <li>하네스마다 동작이 달라 디버깅 어려움</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-bg="grid">
+      <p class="eyebrow">Part 03 · 예시</p>
+      <h2>Claude Code 하네스 설정 (.claude/settings.json)</h2>
+      <pre class="code small" data-lang="json"><code>{
+  "permissions": {
+    "allow": ["Read", "Edit", "Bash(npm test:*)"],
+    "deny":  ["Read(./.env)", "Bash(rm -rf:*)"]
+  },
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Edit|Write",
+      "hooks": [{ "type": "command", "command": "npm run lint -- --fix" }]
+    }]
+  }
+}</code></pre>
+      <p class="code-caption">무엇을 허용/금지할지 + 행동 후 자동으로 무엇을 실행할지 = 하네스 설계</p>
+    </section>
+
+    <!-- ===== 04. 루프 엔지니어링 ===== -->
+    <section class="slide" data-bg="orbit">
+      <p class="eyebrow">Part 04 · 등장 배경</p>
+      <h2>루프 엔지니어링</h2>
+      <p class="tagline">관찰 → 행동 → 검증을 반복하는 에이전트</p>
+      <ul class="bullets mid">
+          <li class="fragment"><b>ReAct (2022)</b> — 추론(Reason)과 행동(Act)을 번갈아 반복하는 패턴</li>
+          <li class="fragment"><b>AutoGPT (2023)</b> 열풍 → 무한 루프·비용 폭주 문제가 드러남</li>
+          <li class="fragment"><b>Ralph 루프 (2025)</b> — 같은 프롬프트를 계속 다시 실행하는 단순 루프가 의외로 강력</li>
+          <li class="fragment">핵심은 루프 자체보다 <b>종료 조건 · 검증기 · 예산</b> 설계</li>
+      </ul>
+    </section>
+
+    <section class="slide" data-bg="orbit">
+      <p class="eyebrow">Part 04 · 장단점</p>
+      <h2>루프 엔지니어링</h2>
+      <div class="two-col">
+        <div class="card pro">
+          <h3>장점</h3>
+          <ul class="bullets small">
+          <li>한 번에 못 푸는 긴 작업 해결</li>
+          <li>테스트·린터 피드백으로 스스로 수정</li>
+          <li>사람 개입 없이 자율 실행</li>
+          <li>구조가 단순해 구현이 쉬움</li>
+          </ul>
+        </div>
+        <div class="card con">
+          <h3>단점</h3>
+          <ul class="bullets small">
+          <li>비용·시간이 폭주할 수 있음</li>
+          <li>같은 실수를 반복하며 갇힘</li>
+          <li>“완료”를 판단하는 기준 설계가 어려움</li>
+          <li>작은 오류가 단계마다 누적</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-bg="orbit">
+      <p class="eyebrow">Part 04 · 예시</p>
+      <h2>예산 + 검증기가 있는 에이전트 루프</h2>
+      <pre class="code small" data-lang="python"><code>MAX_STEPS = 20
+
+for step in range(MAX_STEPS):              # 1. 예산 (종료 조건)
+    action = llm.decide(goal, history)     # 2. 다음 행동 결정
+    result = tools.run(action)             # 3. 행동 실행
+    history.append((action, result))       # 4. 관찰 기록
+
+    if verifier.passed(result):            # 5. 검증 통과 → 종료
+        break
+else:
+    escalate_to_human(history)             # 예산 초과 → 사람에게</code></pre>
+      <p class="code-caption">“언제 멈출지”를 모델이 아니라 코드가 정한다</p>
+    </section>
+
+    <!-- ===== 05. 그래프 엔지니어링 ===== -->
+    <section class="slide" data-bg="neural">
+      <p class="eyebrow">Part 05 · 등장 배경</p>
+      <h2>그래프 엔지니어링</h2>
+      <p class="tagline">여러 단계·에이전트를 워크플로로 연결</p>
+      <ul class="bullets mid">
+          <li class="fragment">하나의 루프로는 <b>조사 → 작성 → 검토</b> 같은 복잡한 업무를 안정적으로 처리하기 어려움</li>
+          <li class="fragment">작업을 <b>노드(LLM·도구·에이전트)</b>와 <b>엣지(조건 분기)</b>로 쪼갠 그래프로 설계</li>
+          <li class="fragment"><b>LangGraph (2024)</b>, CrewAI·AutoGen 등 멀티에이전트 프레임워크 등장</li>
+          <li class="fragment">Anthropic <b>“Building effective agents” (2024.12)</b> — 체이닝·라우팅·병렬화·오케스트레이터 패턴 정리</li>
+      </ul>
+    </section>
+
+    <section class="slide" data-bg="neural">
+      <p class="eyebrow">Part 05 · 장단점</p>
+      <h2>그래프 엔지니어링</h2>
+      <div class="two-col">
+        <div class="card pro">
+          <h3>장점</h3>
+          <ul class="bullets small">
+          <li>단계별로 관찰·디버깅 가능</li>
+          <li>독립된 단계는 병렬 실행</li>
+          <li>노드마다 다른 모델·프롬프트 최적화</li>
+          <li>체크포인트·재시도·사람 승인 삽입</li>
+          </ul>
+        </div>
+        <div class="card con">
+          <h3>단점</h3>
+          <ul class="bullets small">
+          <li>설계가 복잡해지고 과설계 위험</li>
+          <li>노드 사이에서 정보가 손실됨</li>
+          <li>정해진 경로 밖의 상황에 약함</li>
+          <li>특정 프레임워크에 종속</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-bg="neural">
+      <p class="eyebrow">Part 05 · 예시</p>
+      <h2>LangGraph로 조사 → 작성 → 검토 그래프</h2>
+      <pre class="code small" data-lang="python"><code>from langgraph.graph import StateGraph, END
+
+g = StateGraph(State)
+g.add_node("research", research_agent)
+g.add_node("write",    writer_agent)
+g.add_node("review",   reviewer_agent)
+
+g.set_entry_point("research")
+g.add_edge("research", "write")
+g.add_edge("write", "review")
+g.add_conditional_edges(                      # 검토 결과에 따라 분기
+    "review", lambda s: "write" if s["needs_fix"] else END)
+
+app = g.compile()</code></pre>
+      <p class="code-caption">루프는 그래프의 한 노드가 되고, 그래프는 루프들의 지도가 된다</p>
+    </section>
+
+    <!-- ===== 06. gstack ===== -->
     <section class="slide" data-bg="matrix">
-      <p class="eyebrow">Code</p>
-      <h2>PyTorch로 만드는 간단한 MLP</h2>
-      <pre class="code" data-lang="python"><code># 2층 다층 퍼셉트론
-import torch.nn as nn
-
-class MLP(nn.Module):
-    def __init__(self, d_in, d_hidden, d_out):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(d_in, d_hidden),
-            nn.ReLU(),
-            nn.Linear(d_hidden, d_out),
-        )
-
-    def forward(self, x):
-        return self.net(x)
-
-model = MLP(784, 256, 10)</code></pre>
+      <p class="eyebrow">Bonus 06 · 등장 배경</p>
+      <h2>gstack</h2>
+      <p class="tagline">Garry Tan의 역할 기반 스킬 스택</p>
+      <ul class="bullets mid">
+          <li class="fragment">Y Combinator CEO <b>Garry Tan</b>이 공개한 코딩 에이전트용 스킬 모음 (MIT, 오픈소스)</li>
+          <li class="fragment">범용 어시스턴트 하나 대신 <b>“가상 엔지니어링 팀”</b> — 제품·디자인·엔지니어링·QA·보안·릴리스 역할</li>
+          <li class="fragment"><b>Think → Plan → Build → Review → Test → Ship → Reflect</b> 스프린트 흐름</li>
+          <li class="fragment">목표: CI를 통과하는 버그까지 잡고, AI가 쓴 변경을 <b>리뷰 가능하게</b></li>
+      </ul>
     </section>
 
-    <!-- 7. 카드 / 수치 -->
-    <section class="slide narrow" data-bg="orbit">
-      <p class="eyebrow">Key Numbers</p>
-      <h2>모델은 얼마나 커졌을까?</h2>
-      <div class="stats">
-        <div class="stat fragment"><span class="value">117M</span><span class="label">GPT-1 (2018) 파라미터</span></div>
-        <div class="stat fragment"><span class="value">175B</span><span class="label">GPT-3 (2020) 파라미터</span></div>
-        <div class="stat fragment"><span class="value">×1,500</span><span class="label">2년 사이 규모 증가</span></div>
+    <section class="slide" data-bg="matrix">
+      <p class="eyebrow">Bonus 06 · 장단점</p>
+      <h2>gstack</h2>
+      <div class="two-col">
+        <div class="card pro">
+          <h3>장점</h3>
+          <ul class="bullets small">
+          <li>역할별 관점으로 다각도 검토</li>
+          <li>개발 전 과정을 슬래시 커맨드로 표준화</li>
+          <li>브라우저 QA 내장 (/browse, /qa)</li>
+          <li>안전장치 (/careful, /freeze, /guard)</li>
+          </ul>
+        </div>
+        <div class="card con">
+          <h3>단점</h3>
+          <ul class="bullets small">
+          <li>작성자 취향이 강해 팀 방식과 충돌 가능</li>
+          <li>커맨드가 50개 이상 — 학습 곡선</li>
+          <li>리뷰 단계가 많아 토큰·시간 비용 증가</li>
+          <li>업데이트가 잦아 구성이 자주 바뀜</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <!-- 8. 인용 -->
-    <section class="slide center" data-bg="warp">
-      <blockquote class="quote">
-        “Can machines think?”
-      </blockquote>
-      <p class="cite">— Alan Turing, <i>Computing Machinery and Intelligence</i> (1950)</p>
+    <section class="slide" data-bg="matrix">
+      <p class="eyebrow">Bonus 06 · 예시</p>
+      <h2>설치 & 기능 하나를 만드는 흐름</h2>
+      <pre class="code small" data-lang="shell"><code># 설치 (Claude Code)
+git clone --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack
+cd ~/.claude/skills/gstack &amp;&amp; ./setup
+
+/office-hours       # 아이디어를 재정의하고 설계 문서 작성
+/plan-ceo-review    # 제품 관점: 범위가 맞나? 더 나은 버전은?
+/plan-eng-review    # 설계 관점: 아키텍처·데이터 흐름·엣지 케이스
+   ... 구현 ...
+/review             # 프로덕션 버그 탐지 + 명백한 건 자동 수정
+/qa                 # 실제 브라우저로 동작 테스트 후 버그 수정
+/ship               # main 동기화 → 테스트 → PR 생성
+/retro              # 주간 회고</code></pre>
+      <p class="code-caption">한 명의 AI를 CEO·엔지니어·QA·릴리스 매니저로 번갈아 쓰는 방식</p>
     </section>
 
-    <!-- 9. 마무리 -->
+    <!-- ===== 07. pstack ===== -->
+    <section class="slide" data-bg="warp">
+      <p class="eyebrow">Bonus 07 · 등장 배경</p>
+      <h2>pstack</h2>
+      <p class="tagline">Lauren Tan의 에이전트 워크플로</p>
+      <ul class="bullets mid">
+          <li class="fragment">에이전트가 <b>사람이 검증할 수 있는 속도보다 빠르게</b> 코드를 생성 → “이게 정말 동작하나?”</li>
+          <li class="fragment"><b>Lauren Tan (Poteto)</b>이 시니어 엔지니어의 습관을 에이전트가 반복할 수 있는 워크플로로 패키징</li>
+          <li class="fragment">핵심 원칙은 <b>검증(verification)</b> — 이해 → 설계 → 검증 → 정리</li>
+          <li class="fragment">Cursor 플러그인으로 시작 (MIT) · Claude Code·Codex용 <b>커뮤니티 포트</b> 존재</li>
+      </ul>
+    </section>
+
+    <section class="slide" data-bg="warp">
+      <p class="eyebrow">Bonus 07 · 장단점</p>
+      <h2>pstack</h2>
+      <div class="two-col">
+        <div class="card pro">
+          <h3>장점</h3>
+          <ul class="bullets small">
+          <li>검증 중심이라 결과를 신뢰하기 쉬움</li>
+          <li>여러 모델이 diff 교차 검증</li>
+          <li>작업에 맞는 흐름 자동 선택</li>
+          <li>낯선 코드베이스 빠르게 파악</li>
+          </ul>
+        </div>
+        <div class="card con">
+          <h3>단점</h3>
+          <ul class="bullets small">
+          <li>추론 비용·시간이 큼 (약 2배)</li>
+          <li>작은 UI 수정 등에는 과함</li>
+          <li>Claude Code 등은 비공식 포트</li>
+          <li>모델이 발전하면 불필요해질 수도</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-bg="warp">
+      <p class="eyebrow">Bonus 07 · 예시</p>
+      <h2>설치 & 프로덕션 버그를 고치는 흐름</h2>
+      <pre class="code small" data-lang="shell"><code># 설치 (Cursor)
+/add-plugin pstack
+/setup-pstack    # 모델 라우팅 설정
+
+# 작업에 맞는 플레이북·스킬 자동 선택
+/poteto-mode 결제 실패 버그 고쳐줘
+
+/how            # 런타임에서 실제로 어떻게 동작하는지
+/why            # 코드가 왜 이렇게 됐는지 (히스토리)
+/tdd            # 실패하는 테스트부터 작성
+/interrogate    # 여러 모델이 diff를 공격적으로 검증
+/unslop         # PR 설명의 AI 말투 정리</code></pre>
+      <p class="code-caption">작은 작업엔 과하고, 핵심 기능·대규모 리팩터·프로덕션 버그에 쓰는 도구</p>
+    </section>
+
+    <!-- 마무리 -->
     <section class="slide center" data-bg="pulse">
       <p class="eyebrow">Thank you</p>
       <h1><span class="gradient-text">Q &amp; A</span></h1>
@@ -139,7 +446,7 @@ model = MLP(784, 256, 10)</code></pre>
 
   <!-- 하단 HUD -->
   <div class="hud">
-    <span class="hud-title">AI 강의 · 인공지능 입문</span>
+    <span class="hud-title">AI 강의 · AI 엔지니어링의 진화</span>
     <span class="counter" id="counter">1 / 9</span>
   </div>
   <div class="progress"><span id="progress"></span></div>
